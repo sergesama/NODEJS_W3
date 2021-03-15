@@ -16,14 +16,16 @@ exports.getToken = function(user) {
     return jwt.sign(user, config.secretKey,
         {expiresIn: 3600});
 };
-exports.verifyAdmin = (req,res,next) => {
+exports.verifyAdmin = (req,next) => {
+	
     if(req.user.admin)
 	{
-		next();
+		console.log(req.user.admin)
+		return true;
 	}
 	else
 	{
-	  var err = new Error('You are not an admin!');
+	  var err = new Error('You are not authorized to perform this operation!');
       err.status = 403;
       next(err);
 	}
